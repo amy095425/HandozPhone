@@ -25,6 +25,9 @@
 .tiktok-like svg { width: 37px; height: 37px; fill: currentColor; filter: drop-shadow(0 2px 4px #0005); transition: transform .2s,color .2s; }
 .tiktok-like.is-liked { color: #fe2c55; }
 .tiktok-like:active svg { transform: scale(1.18); }
+.tiktok-sound { width: 48px; min-height: 48px; padding: 6px 2px; border: 0; border-radius: 24px; display: grid; justify-items: center; gap: 4px; color: #fff; background: #0006; font: inherit; font-size: 10px; cursor: pointer; }
+.tiktok-sound svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tiktok-sound:active { background: #ffffff30; transform: scale(.96); }
 .tiktok-video-error { position: absolute; top: 45%; left: 12%; right: 12%; padding: 14px; border: 0; border-radius: 12px; color: #fff; background: #222d; font: inherit; font-size: 13px; line-height: 1.5; text-align: center; cursor: pointer; }
 .tiktok-video-error[hidden] { display: none; }
 .tiktok-tabbar { z-index: 5; flex: 0 0 auto; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); min-height: 60px; padding: 4px var(--safe-right) calc(8px + var(--safe-bottom)) var(--safe-left); border-top: 1px solid #ffffff19; background: #080808; }

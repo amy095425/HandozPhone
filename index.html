@@ -2171,26 +2171,14 @@
     const passcodeError = document.querySelector("#passcode-error");
     const passcodeKeys = document.querySelectorAll("[data-digit]");
     const appViews = [...document.querySelectorAll(".app-view")];
-    // 截图中可辨认的对话内容以固定数据保存，界面重绘时不会改变顺序或文字。
+    // 保留联系人及会话入口；消息记录已清空。
     const messagesConversation = {
       id: "hanjin-2026-09-01",
       contactName: "Hanjin",
       phoneNumber: "+82 20060105",
       date: "2026-09-01",
       unread: true,
-      messages: [
-        { id: "message-001", sender: "me", text: "您好，方便咨询合作相关事宜吗？" },
-        { id: "message-002", sender: "hanjin", text: "不约线下，不拍双人，不露脸，感谢理解🙏 更多广告相关请咨询助理：SaiZzzz" },
-        { id: "message-003", sender: "me", text: "非商务合作，官方公益活动可以吗？科普向，结束后赠送两个月免费推流" },
-        { id: "message-004", sender: "me", text: "🔗link.onlyfans.com" },
-        { id: "message-005", sender: "me", text: "这是我的主页，例图见置顶：DiveintOHeaveN.onlyfans.com" },
-        { id: "message-006", sender: "hanjin", text: "头像你本人？" },
-        { id: "message-007", sender: "me", text: "原图直出😎" },
-        { id: "message-008", sender: "hanjin", text: "😮", presentation: "emoji" },
-        { id: "message-009", sender: "hanjin", text: "下周一晚七点首尔林地铁站c出口见方便吗？" },
-        { id: "message-010", sender: "hanjin", text: "加我kakaotalk吧，同手机号" },
-        { id: "message-011", sender: "me", text: "😲👌", presentation: "emoji" }
-      ]
+      messages: []
     };
     const appBadgeStorageKey = "phone-found-website:badge-counts:v1";
     const appBadgeWindowPrefix = "phone-found-badges:v1:";
@@ -2538,7 +2526,8 @@
       const emojiClass = message.presentation === "emoji" ? " is-emoji" : "";
       return `<div class="message-bubble from-${message.sender}${emojiClass}" data-message-id="${message.id}">${escapeHTML(message.text)}</div>`;
     }).join("");
-    document.querySelector("#message-row-preview").textContent = messagesConversation.messages[messagesConversation.messages.length - 1].text;
+    document.querySelector("#message-row-preview").textContent = messagesConversation.messages[messagesConversation.messages.length - 1]?.text || "";
+    document.querySelector("#conversation-scroll .messages-date-divider").hidden = messagesConversation.messages.length === 0;
     document.querySelector("#message-unread-dot").hidden = !messagesConversation.unread;
     updateAppBadges();
     let lastOpenedApp = null;
