@@ -1,0 +1,88 @@
+.app-view.xapp-view { overflow: hidden; color: #f2f2f2; background: #000; color-scheme: dark; }
+.xapp-shell { position: relative; width: min(100%,520px); height: 100%; margin-inline: auto; display: flex; flex-direction: column; overflow: hidden; background: #000; }
+.xapp-status { height: calc(30px + var(--safe-top)); flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: var(--safe-top) 22px 0; background: #000; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.xapp-status svg { width: 62px; height: 16px; }
+.xapp-page { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.xapp-page[hidden] { display: none; }
+.xapp-header { flex: 0 0 58px; display: grid; grid-template-columns: 50px minmax(0,1fr) 50px; align-items: center; padding-inline: 10px; background: #000; text-align: center; }
+.xapp-icon-button { width: 44px; height: 44px; padding: 0; border: 0; display: grid; place-items: center; color: #eee; background: transparent; cursor: pointer; }
+.xapp-icon-button svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.xapp-logo { justify-self: center; width: 27px; height: 27px; }
+.xapp-feed-tabs { flex: 0 0 50px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #292b2e; text-align: center; font-size: 15px; font-weight: 600; color: #787d82; }
+.xapp-feed-tabs span { position: relative; display: grid; place-items: center; }
+.xapp-feed-tabs .is-current { color: #fff; }
+.xapp-feed-tabs .is-current::after { content: ''; position: absolute; bottom: 0; width: 64px; height: 4px; border-radius: 4px; background: #1d9bf0; }
+.xapp-feed-scroll,.xapp-room-scroll,.xapp-chat-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.xapp-feed-scroll::-webkit-scrollbar,.xapp-room-scroll::-webkit-scrollbar,.xapp-chat-scroll::-webkit-scrollbar { display: none; }
+.xapp-post { padding: 17px 16px 0; border-bottom: 1px solid #292b2e; }
+.xapp-author { display: flex; align-items: flex-start; gap: 11px; }
+.xapp-author-avatar { width: 44px; height: 44px; flex: 0 0 44px; display: block; border-radius: 50%; object-fit: cover; }
+.xapp-post-default-avatar { display: grid; place-items: center; color: #3d3b44; font-size: 20px; font-weight: 600; }
+.xapp-author-copy { flex: 1; min-width: 0; }
+.xapp-author-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; }
+.xapp-host-tag { padding: 2px 5px; border-radius: 4px; color: #c0a7ff; background: #7650c42b; font-size: 11px; font-weight: 500; }
+.xapp-author-meta { margin-top: 5px; color: #777c83; font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+.xapp-post-text { margin: 15px 0 12px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.xapp-post-image { display: block; width: 100%; height: auto; object-fit: cover; border: 1px solid #2b2e33; border-radius: 16px; background: #111; }
+.xapp-space-card { padding: 18px; overflow: hidden; border-radius: 18px; background: #7650f5; }
+.xapp-space-kicker { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #ffffffd0; }
+.xapp-space-kicker svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+.xapp-space-card h2 { margin: 20px 0 9px; font-size: 27px; font-weight: 750; }
+.xapp-space-card p { margin: 0; color: #ffffffe0; font-size: 14px; line-height: 1.5; }
+.xapp-space-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 34px; }
+.xapp-space-footer span { color: #ffffffe0; font-size: 12px; }
+.xapp-join { min-width: 88px; min-height: 44px; padding: 9px 18px; border: 1px solid #ffffffb0; border-radius: 999px; color: #fff; background: transparent; font: inherit; font-size: 14px; font-weight: 650; cursor: pointer; }
+.xapp-post-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px; padding: 5px 0; color: #72777e; }
+.xapp-post-actions svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.xapp-post-stat { min-width: 0; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; font-size: 11px; font-variant-numeric: tabular-nums; }
+.xapp-post-stat svg { flex: 0 0 19px; width: 19px; height: 19px; }
+.xapp-post-like { cursor: pointer; border-radius: 18px; }
+.xapp-post-like:active { background: #f9188019; }
+.xapp-post-like.is-liked { color: #f91880; }
+.xapp-post-like.is-liked svg { fill: currentColor; }
+.xapp-tabbar { flex: 0 0 auto; min-height: 64px; padding: 5px var(--safe-right) calc(9px + var(--safe-bottom)) var(--safe-left); display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); border-top: 1px solid #292b2e; background: #000; }
+.xapp-tabbar button { min-width: 0; min-height: 44px; display: grid; justify-items: center; align-content: center; gap: 4px; padding: 0; border: 0; color: #686d74; background: transparent; font: inherit; font-size: 10px; }
+.xapp-tabbar svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.xapp-tabbar .is-selected { color: #fff; cursor: pointer; }
+.xapp-tabbar .is-selected svg { fill: currentColor; }
+.xapp-tabbar button:disabled { pointer-events: none; opacity: .7; }
+.xapp-room-header-title { font-size: 17px; font-weight: 650; }
+.xapp-leave { min-height: 44px; padding: 0; border: 0; color: #f37887; background: transparent; font: inherit; font-size: 14px; cursor: pointer; }
+.xapp-room-scroll { padding: 8px 16px 95px; }
+.xapp-room-live { margin: 7px 0 10px; color: #82878d; font-size: 13px; }
+.xapp-room-live > span:first-child { color: #b99cff; font-weight: 600; }
+.xapp-room-scroll h1 { margin: 0 0 21px; color: #fff; font-size: 27px; line-height: 1.3; }
+.xapp-room-host { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; padding-bottom: 18px; border-bottom: 1px solid #24262a; }
+.xapp-room-host img { width: 60px; height: 60px; display: block; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #7650f5; }
+.xapp-room-host strong { display: block; font-size: 15px; }
+.xapp-room-host span { display: block; margin-top: 6px; color: #b59aff; font-size: 12px; }
+.xapp-users { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 22px 10px; align-items: start; }
+.xapp-user { min-width: 0; text-align: center; }
+.xapp-user-avatar { width: min(60px,100%); aspect-ratio: 1; margin: 0 auto 8px; display: grid; place-items: center; border-radius: 50%; color: #3d3b44; font-size: 23px; font-weight: 600; }
+.xapp-user-name { margin: 0; color: #eee; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.xapp-user-role { margin: 4px 0 0; color: #767c84; font-size: 10px; }
+.xapp-chat-fab { position: absolute; z-index: 3; right: 18px; bottom: 18px; width: 60px; height: 60px; padding: 0; display: flex; align-items: center; justify-content: center; gap: 3px; border: 0; border-radius: 50%; color: #fff; background: linear-gradient(130deg,#5647e8,#9160ff); box-shadow: 0 5px 20px #7650f54d; font: inherit; font-size: 12px; cursor: pointer; }
+.xapp-chat-fab svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.xapp-icon-button:active,.xapp-join:active,.xapp-chat-fab:active { opacity: .75; transform: scale(.96); }
+.xapp-sheet-backdrop { position: absolute; z-index: 20; inset: 0; display: flex; align-items: flex-end; justify-content: center; background: #0009; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s ease,visibility .25s ease; }
+.xapp-sheet-backdrop.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+.xapp-sheet { width: min(100%,520px); height: 78%; max-height: 78%; padding-bottom: calc(16px + var(--safe-bottom)); display: flex; flex-direction: column; border: 1px solid #ffffff1b; border-radius: 24px 24px 0 0; background: #191a1e; transform: translateY(100%); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.xapp-sheet-backdrop.is-open .xapp-sheet { transform: translateY(0); }
+.xapp-sheet-handle { width: 36px; height: 4px; flex: 0 0 auto; margin: 9px auto 5px; border-radius: 999px; background: #55565d; }
+.xapp-sheet header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 8px 18px; }
+.xapp-sheet h2 { margin: 0; font-size: 17px; }
+.xapp-chat-scroll { padding: 6px 18px 12px; }
+.xapp-chat-message { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; }
+.xapp-chat-avatar { width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border-radius: 50%; color: #3d3b44; font-size: 16px; font-weight: 600; }
+.xapp-chat-message-body { min-width: 0; max-width: calc(100% - 42px); }
+.xapp-chat-message strong { display: block; margin: 0 0 4px; color: #999da5; font-size: 11px; line-height: 1.4; font-weight: 500; overflow-wrap: anywhere; }
+.xapp-chat-message p { width: fit-content; max-width: 100%; margin: 0; padding: 9px 11px; border-radius: 4px 15px 15px; color: #f0f0f2; background: #2a2c33; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-wrap; }
+.xapp-chat-message.is-me { justify-content: flex-end; }
+.xapp-chat-message.is-me .xapp-chat-message-body { max-width: 82%; }
+.xapp-chat-message.is-me p { border-radius: 15px 4px 15px 15px; background: #7650d9; color: #fff; }
+body[data-active-app="x"] .global-music-player { bottom: calc(158px + var(--safe-bottom)); }
+body.has-music-selection .xapp-feed-scroll { padding-bottom: 180px; }
+body.has-music-selection .xapp-room-scroll { padding-bottom: 185px; }
+body.xapp-sheet-open .global-music-player { visibility: hidden; pointer-events: none; }
+@media (max-width: 360px) { .xapp-users { gap: 19px 8px; } .xapp-user-avatar { width: 53px; } }
+@media (prefers-reduced-motion: reduce) { .xapp-sheet-backdrop,.xapp-sheet { transition: none; } }

@@ -1,0 +1,46 @@
+.icon.notes-app-icon { background: #fff; }
+.icon.notes-app-icon svg { width: 100%; height: 100%; }
+.app-view.notes-view { background: #000; color: #f5f5f7; overflow: hidden; font-family: -apple-system,BlinkMacSystemFont,sans-serif; }
+.notes-shell { width: min(100%,520px); height: 100%; margin: auto; }
+.notes-page { display: flex; flex-direction: column; height: 100%; }
+.notes-page[hidden] { display: none; }
+.notes-view button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.notes-nav { display: flex; justify-content: space-between; align-items: center; padding: calc(var(--safe-top) + 12px) 16px 12px; flex-shrink: 0; }
+.notes-nav button,.notes-footer button { min-width: 44px; height: 44px; padding: 10px; border: 1px solid #ffffff12; border-radius: 50%; background: #1c1c1e; display: flex; align-items: center; justify-content: center; }
+.notes-view svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.notes-scroll { flex: 1; min-height: 0; padding: 10px 16px 26px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.notes-scroll::-webkit-scrollbar { display: none; }
+.notes-scroll h1 { font-size: 34px; font-weight: 700; line-height: 1.2; margin: 8px 0 4px; letter-spacing: -.8px; }
+.notes-count { color: #8e8e93; font-size: 14px; margin: 0 0 20px; }
+.notes-search { display: flex; align-items: center; gap: 8px; color: #98989e; border-radius: 12px; background: #1c1c1e; min-height: 40px; padding: 8px 12px; margin-bottom: 20px; }
+.notes-search svg { width: 20px; height: 20px; }
+.notes-folders { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.notes-folder { padding: 16px; border-radius: 16px; background: #1c1c1e; min-width: 0; }
+.notes-folder svg { color: #ffd060; margin-bottom: 10px; }
+.notes-folder strong,.notes-folder span { display: block; }
+.notes-folder strong { font-size: 15px; }
+.notes-folder span { font-size: 12px; margin-top: 5px; color: #99999e; }
+.notes-scroll h2 { font-size: 21px; margin: 26px 0 12px; }
+.notes-list { background: #1c1c1e; border-radius: 23px; overflow: hidden; padding: 0 18px; }
+.notes-row { display: block; width: 100%; padding: 17px 0; text-align: left; border: 0; border-bottom: .5px solid #ffffff20; background: transparent; }
+.notes-row:last-child { border-bottom: 0; }
+.notes-row strong { display: block; font-size: 17px; line-height: 1.4; }
+.notes-preview { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; overflow-wrap: anywhere; font-size: 14px; line-height: 1.5; color: #99999e; margin: 4px 0; }
+.notes-row small { font-size: 12px; color: #77777d; }
+.notes-footer { display: flex; justify-content: space-between; align-items: center; padding: 8px 18px calc(16px + var(--safe-bottom)); color: #98989e; font-size: 12px; }
+.notes-footer button { color: #ffd060; }
+.notes-nav .notes-back { background: transparent; border: 0; border-radius: 0; color: #ffd060; gap: 4px; padding-left: 0; }
+.notes-detail-scroll { background: #000; }
+.notes-view button:active { opacity: .6; }
+body[data-active-app="notes"] .global-music-player { bottom: calc(84px + var(--safe-bottom)); }
+body[data-active-app="notes"] .notes-scroll { padding-bottom: 110px; }
+.notes-detail-date { margin: 6px 0 20px; color: #8e8e93; font-size: 13px; text-align: center; }
+.notes-detail-scroll h1 { font-size: 28px; overflow-wrap: anywhere; margin-bottom: 22px; }
+.notes-audio { display: flex; position: relative; align-items: center; gap: 14px; padding: 18px 16px 30px; margin-bottom: 24px; border-radius: 16px; background: #e9e9eb; color: #292929; }
+.notes-audio-toggle { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; padding: 10px; border: 0; border-radius: 50%; background: #d4d4d8; }
+.notes-audio-toggle svg { fill: currentColor; stroke: none; }
+.notes-audio-controls { display: grid; flex: 1; min-width: 0; gap: 7px; font-size: 13px; }
+.notes-audio-controls input { width: 100%; min-width: 0; margin: 0; accent-color: #b88912; }
+.notes-audio-time { color: #67676b; font-variant-numeric: tabular-nums; }
+.notes-audio-status { position: absolute; bottom: 7px; left: 16px; right: 16px; font-size: 11px; color: #a33434; }
+.notes-lyrics { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; line-height: 1.8; padding-bottom: 30px; }

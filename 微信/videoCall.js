@@ -2,23 +2,24 @@
 const wechatVideoCallConfig = {
   videoUrl: './微信/video-call.MP4',
   newMessages: ['路过汉江了', '哇塞，漂亮得简直不像话', '看到樱花就想起你的脸了', '我好像只是单纯的在想你'],
-  afterCallMessages: ['和我见面吧', '我来见你也可以'],
-  quickReplies: ['在汉江等着，我现在就来', '我想喝밀키스了']
+  afterCallMessages: [
+    '怎么不开摄像头也不说话？',
+    '在忙吗？是不是打扰你了？',
+    '想和你见面了',
+    '我现在回公司找你吧，然后我们再一起来汉江',
+    '实在是太想见到你了'
+  ]
 };
 const wechatCallState = {
   chatId: null, hasTriggeredCall: false, ready: false, stage: 'idle', replay: false,
   timers: [], lastTop: 0, touchY: null, resumeMusic: false, musicTrack: null
 };
-// 剧情状态在本次页面加载中保留，退出会话/重播视频均不重置。
-const wechatCallStoryState = { started: false, ready: false, sentReplies: new Set(), purchaseReplySent: false };
-const wechatQuickReplies = document.querySelector('#wechat-quick-replies');
+// 首次通话后剧情只触发一次，重播不重复发送。
+const wechatCallStoryState = { started: false };
 const wechatCallPhoneSvg = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 19c6-7 18-7 24 0l-2 5-7-2v-4h-6v4l-7 2Z"/></svg>';
 const wechatCallVideoSvg = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="17" height="17" rx="3"/><path d="m20 13 9-5v17l-9-5Z"/></svg>';
 const wechatCallHost = document.createElement('div');
 wechatCallHost.innerHTML = `
-  <div class="wechat-call-banner" id="wechat-call-banner" role="status" hidden>
-    <img src="./微信/金道勋头像.png" alt=""><div><strong>勋❤️发来消息</strong><p id="wechat-call-banner-text"></p></div>
-  </div>
   <section class="wechat-call-incoming" id="wechat-call-incoming" role="dialog" aria-modal="true" aria-label="勋❤️的视频通话邀请" hidden>
     <div class="wechat-call-person"><img src="./微信/金道勋头像.png" alt="勋头像"><div><strong>勋❤️</strong><p>邀请你进行视频通话...</p></div></div>
     <div class="wechat-call-actions">
@@ -33,7 +34,6 @@ wechatCallHost.innerHTML = `
     <button class="wechat-call-control wechat-call-hangup" id="wechat-call-hangup" type="button"><span>${wechatCallPhoneSvg}</span>挂断</button>
   </section>`;
 document.body.append(wechatCallHost);
-const wechatCallBanner = document.querySelector('#wechat-call-banner');
 const wechatCallIncoming = document.querySelector('#wechat-call-incoming');
 const wechatCallPlayer = document.querySelector('#wechat-call-player');
 const wechatCallVideo = document.querySelector('#wechat-call-video');
@@ -73,48 +73,19 @@ const appendWechatXunMessage = (text, isVideoCallRecord = false, isMe = false, s
     scrollWechatCallToLatest(smooth);
   }
   document.querySelector('[data-wechat-chat="xun"] .wechat-chat-preview').textContent = text;
+  if (!isMe && !isVideoCallRecord) {
+    showNotification({appName:'微信',appIcon:'./微信/微信图标.png',sender:'勋❤️',message:text,targetApp:'wechat',chatId:'xun'});
+  }
+
 };
-const updateWechatQuickReplies = () => {
-  wechatQuickReplies.hidden = !(isWechatXunChatActive() && wechatCallStoryState.ready
-    && wechatCallStoryState.sentReplies.size < wechatVideoCallConfig.quickReplies.length
-    && wechatCallState.stage === 'idle');
-};
-wechatVideoCallConfig.quickReplies.forEach((text) => {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.textContent = text;
-  button.addEventListener('click', () => {
-    if (!isWechatXunChatActive() || wechatCallState.stage !== 'idle'
-      || !wechatCallStoryState.ready || wechatCallStoryState.sentReplies.has(text)) return;
-    // 每个选项独立发送一次，发送后只隐藏当前选项。
-    wechatCallStoryState.sentReplies.add(text);
-    button.disabled = true;
-    button.hidden = true;
-    updateWechatQuickReplies();
-    appendWechatXunMessage(text, false, true, true);
-    if (wechatCallStoryState.sentReplies.size === wechatVideoCallConfig.quickReplies.length
-      && !wechatCallStoryState.purchaseReplySent) {
-      wechatCallStoryState.purchaseReplySent = true;
-      window.setTimeout(() => {
-        appendWechatXunMessage('👌，已购买', false, false, true);
-      }, 2000);
-    }
-  });
-  wechatQuickReplies.append(button);
-});
 const beginWechatCallStory = () => {
   if (wechatCallStoryState.started) return;
   wechatCallStoryState.started = true;
-  // 独立于来电计时器；离开聊天后仍记入原会话，其他会话不显示选项。
+  // 消息写入原会话；若切到其他聊天，不会插入其他聊天的页面。
   wechatVideoCallConfig.afterCallMessages.forEach((text, index) => {
     window.setTimeout(() => {
       appendWechatXunMessage(text, false, false, true);
-      if (index === wechatVideoCallConfig.afterCallMessages.length - 1) {
-        wechatCallStoryState.ready = true;
-        updateWechatQuickReplies();
-        scrollWechatCallToLatest(true);
-      }
-    }, 3000 + index * 1000);
+    }, (index + 1) * 1000);
   });
 };
 const restoreWechatCallMusic = () => {
@@ -128,8 +99,6 @@ const cancelWechatCallFlow = () => {
   wechatCallState.stage = 'idle';
   wechatCallState.ready = false;
   wechatCallState.chatId = null;
-  updateWechatQuickReplies();
-  wechatCallBanner.hidden = true;
   wechatCallIncoming.hidden = true;
   wechatCallPlayer.hidden = true;
   wechatCallVideo.autoplay = false;
@@ -150,7 +119,6 @@ const finishWechatVideoCall = () => {
     appendWechatXunMessage('通话结束 00:14', true);
     beginWechatCallStory();
   }
-  updateWechatQuickReplies();
   restoreWechatCallMusic();
   if (isWechatXunChatActive()) wechatMessageScroll.focus({ preventScroll: true });
 };
@@ -167,9 +135,7 @@ const startWechatVideoCall = (replay = false) => {
   if (!isWechatXunChatActive() || (replay && wechatCallState.stage !== 'idle')) return;
   wechatCallState.replay = replay;
   wechatCallState.stage = 'video';
-  updateWechatQuickReplies();
   wechatCallIncoming.hidden = true;
-  wechatCallBanner.hidden = true;
   wechatCallState.resumeMusic = musicIsPlaying;
   wechatCallState.musicTrack = activeMusicTrack;
   if (musicIsPlaying) pauseMusic();
@@ -184,18 +150,14 @@ const triggerWechatCallFlow = () => {
   if (!isWechatXunChatActive() || !wechatCallState.ready || wechatCallState.hasTriggeredCall) return;
   wechatCallState.hasTriggeredCall = true;
   wechatCallState.stage = 'messages';
-  updateWechatQuickReplies();
   wechatCallState.replay = false;
   wechatVideoCallConfig.newMessages.forEach((text, index) => {
     scheduleWechatCall(() => {
       appendWechatXunMessage(text);
-      document.querySelector('#wechat-call-banner-text').textContent = text;
-      wechatCallBanner.hidden = false;
     }, 2000 + index * 1000);
   });
   // 触顶后等待 2 秒；四条消息在第 2、3、4、5 秒出现，再停留 2.2 秒来电。
   scheduleWechatCall(() => {
-    wechatCallBanner.hidden = true;
     wechatCallState.stage = 'incoming';
     wechatCallIncoming.hidden = false;
     document.querySelector('#wechat-call-answer').focus({ preventScroll: true });
@@ -205,7 +167,6 @@ const enterWechatCallChat = (chatId) => {
   cancelWechatCallFlow();
   wechatCallState.chatId = chatId;
   wechatCallState.hasTriggeredCall = false;
-  updateWechatQuickReplies();
   window.requestAnimationFrame(() => {
     wechatCallState.lastTop = wechatMessageScroll.scrollTop;
     wechatCallState.ready = true;

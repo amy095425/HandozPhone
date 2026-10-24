@@ -1,0 +1,3 @@
+#imessage-view .sms-default-avatar { background: #b9bdc5; }
+#imessage-view .message-conversation-row + .message-conversation-row { border-top: .5px solid #e5e5ea; }
+#imessage-view .sms-received { align-self: flex-start; border-bottom-left-radius: 6px; background: #34c759; color: #111; white-space: pre-wrap; overflow-wrap: anywhere; }

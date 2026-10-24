@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>wHOON’Se iPhone?</title>
+  <title>HandozPHONE</title>
   <link rel="stylesheet" href="./tiktok/tiktok.css">
   <style>
     :root {
@@ -20,8 +20,8 @@
       --safe-right: env(safe-area-inset-right, 0px);
       --lock-content-width: min(100vw, clamp(320px, 46dvh, 460px));
       /* 壁纸保留为独立变量，之后可直接替换颜色或本地图片。 */
-      --wallpaper-lock: #000000;
-      --wallpaper-home: #000000;
+      --wallpaper-lock: linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.20)), url("./其他/手机壁纸.png");
+      --wallpaper-home: linear-gradient(rgba(0,0,0,.16), rgba(0,0,0,.16)), url("./其他/手机壁纸.png");
       --lockscreen-wallpaper: var(--wallpaper-lock);
       --lock-bottom-btn-size: clamp(52px, min(14vw, 6.5vh), 88px);
       --lock-bottom-icon-size: 48%;
@@ -38,7 +38,7 @@
       color: white;
       user-select: none;
       -webkit-user-select: none;
-      background: var(--wallpaper-home);
+      background: #000000;
     }
     /* 抽象的冰蓝玻璃流体，让壁纸铺满整个可视区域 */
     body::before, body::after {
@@ -265,6 +265,9 @@
       align-items: center;
       padding: calc(var(--safe-top) + 12px) clamp(14px, 4vw, 22px) calc(var(--safe-bottom) + 18px);
       background: var(--lockscreen-wallpaper);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       color: #fff;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
@@ -376,7 +379,7 @@
     }
     .lockscreen.is-dragging { transition: none; transform: translate3d(0, var(--drag-y, 0px), 0); opacity: var(--drag-opacity, 1); }
     .lockscreen.is-unlocking { opacity: 0; transform: translate3d(0, -100%, 0); filter: none; pointer-events: none; visibility: hidden; }
-    .home-screen { position: fixed; inset: 0; z-index: 1; visibility: hidden; opacity: 0; background: var(--wallpaper-home); transition: opacity .48s ease; }
+    .home-screen { position: fixed; inset: 0; z-index: 1; visibility: hidden; opacity: 0; background: var(--wallpaper-home); background-size: cover; background-position: center; background-repeat: no-repeat; transition: opacity .48s ease; }
     body.is-unlocked .home-screen { visibility: visible; opacity: 1; }
     body.is-unlocked .lockscreen { pointer-events: none; }
     .passcode-screen {
@@ -399,6 +402,19 @@
       will-change: transform, opacity;
       transition: transform .38s cubic-bezier(.22,1,.36,1), opacity .38s cubic-bezier(.22,1,.36,1), visibility .38s ease;
     }
+    .passcode-screen::before {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      z-index: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(0,0,0,.34), rgba(0,0,0,.34)), url("./其他/手机壁纸.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(20px);
+    }
+    .passcode-screen .passcode-panel { position: relative; z-index: 1; }
     .passcode-screen.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translate3d(0, 0, 0); }
     .passcode-panel {
       width: min(100%, var(--lock-content-width, 420px));
@@ -685,12 +701,12 @@
     .wechat-message-row.is-new { animation: wechat-message-arrive .3s ease-out; }
     @keyframes wechat-message-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .wechat-call-layer { position: fixed; z-index: 90; inset: 0; color: #fff; background: #000; }
-    .wechat-call-layer[hidden],.wechat-call-incoming[hidden],.wechat-call-banner[hidden] { display: none; }
-    .wechat-call-incoming,.wechat-call-banner { position: fixed; z-index: 91; top: calc(14px + var(--safe-top)); left: 50%; width: min(94vw,430px); box-sizing: border-box; transform: translateX(-50%); border: 1px solid #ffffff22; border-radius: 22px; background: #202328ee; color: #fff; box-shadow: 0 10px 36px #0005; -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); animation: wechat-call-arrive .3s ease-out; }
+    .wechat-call-layer[hidden],.wechat-call-incoming[hidden] { display: none; }
+    .wechat-call-incoming { position: fixed; z-index: 91; top: calc(14px + var(--safe-top)); left: 50%; width: min(94vw,430px); box-sizing: border-box; transform: translateX(-50%); border: 1px solid #ffffff22; border-radius: 22px; background: #202328ee; color: #fff; box-shadow: 0 10px 36px #0005; -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); animation: wechat-call-arrive .3s ease-out; }
     @keyframes wechat-call-arrive { from { opacity: 0; margin-top: -15px; } to { opacity: 1; margin-top: 0; } }
     .wechat-call-incoming { padding: 20px; }
     .wechat-call-person { display: flex; align-items: center; gap: 12px; }
-    .wechat-call-person img,.wechat-call-banner img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; }
+    .wechat-call-person img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; }
     .wechat-call-person strong { display: block; margin-bottom: 5px; font-size: 19px; }
     .wechat-call-person p { margin: 0; color: #d0d1d3; font-size: 14px; }
     .wechat-call-actions { display: flex; justify-content: space-around; margin-top: 23px; }
@@ -699,26 +715,17 @@
     .wechat-call-control.is-answer span { background: #30c85a; }
     .wechat-call-control svg { width: 29px; height: 29px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .wechat-call-control:active { opacity: .8; transform: scale(.96); }
-    .wechat-call-banner { display: flex; align-items: center; gap: 11px; padding: 13px 16px; pointer-events: none; }
-    .wechat-call-banner strong { font-size: 15px; }
-    .wechat-call-banner p { margin: 5px 0 0; color: #ddd; font-size: 13px; }
     .wechat-call-video { display: block; width: 100%; height: 100%; object-fit: cover; }
     .wechat-call-video-title { position: absolute; top: calc(20px + var(--safe-top)); inset-inline: 20px; text-align: center; font-size: 18px; text-shadow: 0 1px 4px #000b; pointer-events: none; }
     .wechat-call-hangup { position: absolute; bottom: calc(28px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); }
     .wechat-call-hangup:active { transform: translateX(-50%) scale(.96); }
     .wechat-call-play-error { position: absolute; top: 40%; left: 8%; right: 8%; padding: 12px; color: #fff; text-align: center; font-size: 14px; text-shadow: 0 1px 3px #000c; pointer-events: none; }
     body.wechat-video-active .global-music-player { visibility: hidden; pointer-events: none; }
-    @media (prefers-reduced-motion: reduce) { .wechat-message-row.is-new,.wechat-call-incoming,.wechat-call-banner { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .wechat-message-row.is-new,.wechat-call-incoming { animation: none; } }
     .wechat-composer { min-height: 62px; flex: 0 0 auto; padding: 8px 10px calc(8px + var(--safe-bottom)); display: grid; grid-template-columns: 34px minmax(0,1fr) 32px 32px; align-items: center; gap: 8px; border-top: 1px solid #dcdcdf; background: #f7f7f7; }
     .wechat-composer button { width: 32px; height: 36px; padding: 0; display: grid; place-items: center; border: 0; color: #303035; background: transparent; }
     .wechat-composer button svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
     .wechat-composer-input { height: 38px; min-width: 0; padding: 0 12px; display: flex; align-items: center; border-radius: 5px; color: #aaaab0; background: #fff; font-size: 14px; }
-    .wechat-quick-replies { flex: 0 0 auto; display: grid; gap: 8px; padding: 12px 14px; border-top: 1px solid #dedede; background: #ededed; }
-    .wechat-quick-replies[hidden] { display: none; }
-    .wechat-quick-replies button[hidden] { display: none; }
-    .wechat-quick-replies button { min-height: 44px; padding: 10px 14px; border: 1px solid #dedede; border-radius: 12px; color: #202020; background: #fafafa; text-align: left; font: inherit; font-size: 15px; line-height: 1.4; overflow-wrap: anywhere; cursor: pointer; }
-    .wechat-quick-replies button:active { background: #dfebd9; transform: scale(.99); }
-    body.has-music-selection .wechat-quick-replies:not([hidden]) { margin-bottom: 82px; }
     .wechat-discover-scroll { padding-top: 17px; }
     .wechat-discover-group { margin-bottom: 10px; background: #fff; }
     .wechat-discover-row { width: 100%; min-height: 74px; padding: 0 18px; display: grid; grid-template-columns: 42px minmax(0,1fr) 18px; align-items: center; gap: 13px; border: 0; border-bottom: 1px solid #f0f0f0; color: #171717; background: #fff; text-align: left; font: inherit; font-size: 17px; }
@@ -1580,6 +1587,19 @@
       .lock-home-indicator { width: clamp(108px, 16.5vh, 160px); }
     }
   </style>
+  <link rel="stylesheet" href="./home/home.css">
+  <link rel="stylesheet" href="./天气/weather.css">
+  <link rel="stylesheet" href="./备忘录/notes.css">
+  <link rel="stylesheet" href="./微博/weibo.css">
+  <link rel="stylesheet" href="./信息/sms.css">
+  <link rel="stylesheet" href="./外卖/gs.css">
+  <link rel="stylesheet" href="./global/notifications.css">
+  <link rel="stylesheet" href="./日历/calendar.css">
+  <link rel="stylesheet" href="./ig/ig.css">
+  <link rel="stylesheet" href="./kkt/kkt.css">
+  <link rel="stylesheet" href="./时钟/clock.css">
+  <link rel="stylesheet" href="./电话/phone.css">
+  <link rel="stylesheet" href="./X/x.css">
 </head>
 <body>
   <section class="lockscreen" id="lockscreen" aria-label="iPhone 锁屏" tabindex="-1">
@@ -1645,31 +1665,113 @@
     </div>
     <div class="island" aria-label="灵动岛"></div>
 
-    <main class="app-grid" aria-label="应用程序">
-      <button class="app" type="button" aria-label="电话"><span class="icon phone"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M14.2 7.5c1.2-.5 2.6 0 3.2 1.2l3.1 6.8c.5 1.1.2 2.4-.7 3.2l-2.5 2.1a28 28 0 0 0 10 10l2.1-2.5c.8-.9 2.1-1.2 3.2-.7l6.8 3.1c1.2.6 1.7 2 1.2 3.2l-1.8 4.4c-.5 1.2-1.7 2-3 2-17.5-.6-31.5-14.6-32.1-32.1 0-1.3.8-2.5 2-3z"/></svg></span><span class="app-name">電話</span></button>
-      <button class="app" type="button" aria-label="信息" data-app-id="imessage" data-open-app="imessage"><span class="icon messages"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M24 7C13.5 7 5 13.9 5 22.4c0 4.8 2.7 9.1 7 11.9-.4 2.1-1.5 4.1-3.2 5.8-.5.5-.1 1.4.6 1.3 4.1-.5 7.4-2 9.8-4.1 1.5.4 3.1.6 4.8.6 10.5 0 19-6.9 19-15.4S34.5 7 24 7"/></svg></span><span class="app-name">信息</span></button>
-      <button class="app" type="button" aria-label="Safari"><span class="icon safari"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="#1598e8"/><circle cx="24" cy="24" r="17" fill="#f8fcff"/><path fill="#ff4b57" d="m31 13-5.2 13.1L17 35l5.2-13.1z"/><path fill="#147ddb" d="m17 35 5.2-13.1L31 13l-5.2 13.1z"/><circle cx="24" cy="24" r="2" fill="#fff"/></svg></span><span class="app-name">Safari</span></button>
-      <button class="app" type="button" aria-label="相册" data-app-id="photos" data-open-app="photos"><span class="icon"><img class="icon-image" src="./相册/相册图标.webp" alt="" draggable="false"></span><span class="app-name">相册</span></button>
-      <button class="app" type="button" aria-label="相機"><span class="icon camera"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#d9dde2" d="M16 10h6l2.4 3H35a5 5 0 0 1 5 5v17a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V18a5 5 0 0 1 5-5h1z"/><circle cx="24" cy="26" r="9" fill="#545b65"/><circle cx="24" cy="26" r="6.2" fill="#1d2836"/><circle cx="21.8" cy="23.8" r="2" fill="#89a5c5"/><circle cx="34" cy="18" r="1.4" fill="#515a65"/></svg></span><span class="app-name">相機</span></button>
-      <button class="app" type="button" aria-label="设置"><span class="icon settings"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#f1f3f6" d="m42 27 .1-6-4.6-1.1a14 14 0 0 0-1.5-3.6l2.5-4-4.3-4.2-4 2.4a14 14 0 0 0-3.7-1.5L25.4 4h-6l-1.1 4.6a14 14 0 0 0-3.6 1.5l-4-2.5-4.2 4.3 2.4 4a14 14 0 0 0-1.5 3.7L3 20.6v6l4.6 1.1a14 14 0 0 0 1.5 3.6l-2.5 4 4.3 4.2 4-2.4a14 14 0 0 0 3.7 1.5l1.1 4.6h6l1.1-4.6a14 14 0 0 0 3.6-1.5l4 2.5 4.2-4.3-2.4-4a14 14 0 0 0 1.5-3.7z" transform="translate(3 2) scale(.9)"/><circle cx="24" cy="24" r="7" fill="#78818d"/><circle cx="24" cy="24" r="4.5" fill="#dce0e5"/></svg></span><span class="app-name">设置</span></button>
-      <button class="app" type="button" aria-label="地图"><span class="icon maps"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#f6d86c" d="m5 12 11-5 16 5 11-5v29l-11 5-16-5-11 5z"/><path fill="#7fcf90" d="m5 12 11-5v29L5 41z"/><path fill="#fff" d="m16 7 16 5v29l-16-5z"/><path fill="none" stroke="#80b9e8" stroke-width="3" d="m8 29 8-7 7 2 6-8 6 1"/><path fill="#f26c66" d="M25 12c-5 0-8.5 3.8-8.5 8.4 0 5.8 8.5 15.2 8.5 15.2s8.5-9.4 8.5-15.2c0-4.6-3.5-8.4-8.5-8.4"/><circle cx="25" cy="21" r="3" fill="#fff"/></svg></span><span class="app-name">地图</span></button>
-      <button class="app" type="button" aria-label="音乐" data-app-id="music" data-open-app="music"><span class="icon"><img class="icon-image" src="./音乐/音乐图标.webp" alt="" draggable="false"></span><span class="app-name">音乐</span></button>
-      <button class="app" type="button" aria-label="日历"><span class="icon calendar"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="5" width="40" height="39" rx="8" fill="#fff"/><path class="calendar-top" d="M4 13a8 8 0 0 1 8-8h24a8 8 0 0 1 8 8v3H4z"/><text id="calendar-month" class="calendar-month" x="24" y="13" text-anchor="middle">10月</text><text id="calendar-date" class="calendar-date" x="24" y="39" text-anchor="middle">21</text></svg></span><span class="app-name">日历</span></button>
-      <button class="app" type="button" aria-label="时钟"><span class="icon clock"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#f9fafb"/><g stroke="#252a31" stroke-width="1.4" stroke-linecap="round"><path d="M24 8v3M24 37v3M8 24h3M37 24h3M12.7 12.7l2.1 2.1M33.2 33.2l2.1 2.1M35.3 12.7l-2.1 2.1M14.8 33.2l-2.1 2.1"/></g><path d="M24 14v10l7 5" fill="none" stroke="#333943" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="2" fill="#ef5864"/></svg></span><span class="app-name">时钟</span></button>
-      <button class="app" type="button" aria-label="天气"><span class="icon weather"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="31" cy="15" r="7" fill="#ffdc70"/><path d="M15 35h20a7 7 0 0 0 0-14 10 10 0 0 0-19-2 8 8 0 0 0-1 16" fill="#fff"/></svg></span><span class="app-name">天气</span></button>
-      <button class="app" type="button" aria-label="备忘录"><span class="icon notes"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="7" width="30" height="35" rx="4" fill="#fffdf4"/><path d="M10 16h28" stroke="#f2c94c" stroke-width="5"/><path d="M15 23h18M15 29h18M15 35h13" stroke="#c9c8c1" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="app-name">备忘录</span></button>
-      <button class="app" type="button" aria-label="微信" data-app-id="wechat" data-open-app="wechat"><span class="icon"><img class="icon-image" src="./微信/微信图标.png" alt="" draggable="false"></span><span class="app-name">微信</span></button>
-      <button class="app" type="button" aria-label="Tiktok" data-app-id="tiktok" data-open-app="tiktok"><span class="icon"><img class="icon-image" src="./tiktok/tt图标.png" alt="" draggable="false"></span><span class="app-name">Tiktok</span></button>
+    <main class="home-pages" id="home-pages" aria-label="主屏幕，可左右滑动翻页" tabindex="0">
+      <section class="home-page" aria-label="主屏幕第1页"><div class="app-grid home-page-grid">
+        <button class="home-widget home-weather-widget" type="button" data-open-app="weather" data-app-id="weather" aria-label="首尔天气，18度，打开天气">
+          <span class="home-widget-heading">首尔</span><svg class="home-widget-weather-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="31" cy="15" r="9" fill="#ffdb75"/><path d="M12 37h23a8 8 0 0 0 0-16 11 11 0 0 0-21-1 8.6 8.6 0 0 0-2 17Z" fill="#fff"/></svg>
+          <strong class="home-widget-temperature">18°</strong><span class="home-widget-weather-detail">多云</span><span class="home-widget-weather-range">最高 21°　最低 14°</span>
+        </button>
+        <div class="home-widget home-sleep-widget" role="group" aria-label="睡眠，7小时24分钟">
+          <div class="home-sleep-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 15.5A8 8 0 0 1 8.5 5 8.1 8.1 0 1 0 19 15.5Z" fill="currentColor"/></svg><span>睡眠</span></div>
+          <strong class="home-sleep-value">7<span>小时</span>24<span>分钟</span></strong>
+          <span class="home-sleep-label">昨晚的睡眠时长</span><svg class="home-sleep-chart" viewBox="0 0 160 35" preserveAspectRatio="none" aria-hidden="true"><g stroke-linecap="round" stroke-width="8"><path d="M6 28V19m13 9V12m13 16V9" stroke="#7a70d7"/><path d="M45 28V16m13 12V6m13 22V11m13 17V5" stroke="#b39af5"/><path d="M97 28V14m13 14V7m13 21V12m13 16V18m13 10V9" stroke="#6f88dc"/></g></svg>
+        </div>
+        <button class="app" type="button" aria-label="信息" data-app-id="imessage" data-open-app="imessage"><span class="icon messages"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M24 7C13.5 7 5 13.9 5 22.4c0 4.8 2.7 9.1 7 11.9-.4 2.1-1.5 4.1-3.2 5.8-.5.5-.1 1.4.6 1.3 4.1-.5 7.4-2 9.8-4.1 1.5.4 3.1.6 4.8.6 10.5 0 19-6.9 19-15.4S34.5 7 24 7"/></svg></span><span class="app-name">信息</span></button>
+        <button class="app" type="button" aria-label="微信" data-app-id="wechat" data-open-app="wechat"><span class="icon"><img class="icon-image" src="./微信/微信图标.png" alt="" draggable="false"></span><span class="app-name">微信</span></button>
+        <button class="app" type="button" aria-label="电话" data-app-id="phone" data-open-app="phone"><span class="icon phone"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M14.2 7.5c1.2-.5 2.6 0 3.2 1.2l3.1 6.8c.5 1.1.2 2.4-.7 3.2l-2.5 2.1a28 28 0 0 0 10 10l2.1-2.5c.8-.9 2.1-1.2 3.2-.7l6.8 3.1c1.2.6 1.7 2 1.2 3.2l-1.8 4.4c-.5 1.2-1.7 2-3 2-17.5-.6-31.5-14.6-32.1-32.1 0-1.3.8-2.5 2-3z"/></svg></span><span class="app-name">電話</span></button>
+        <button class="app" type="button" aria-label="Safari"><span class="icon safari"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="#1598e8"/><circle cx="24" cy="24" r="17" fill="#f8fcff"/><path fill="#ff4b57" d="m31 13-5.2 13.1L17 35l5.2-13.1z"/><path fill="#147ddb" d="m17 35 5.2-13.1L31 13l-5.2 13.1z"/><circle cx="24" cy="24" r="2" fill="#fff"/></svg></span><span class="app-name">Safari</span></button>
+        <button class="app" type="button" aria-label="日历" data-app-id="calendar" data-open-app="calendar"><span class="icon calendar"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="5" width="40" height="39" rx="8" fill="#fff"/><path class="calendar-top" d="M4 13a8 8 0 0 1 8-8h24a8 8 0 0 1 8 8v3H4z"/><text id="calendar-month" class="calendar-month" x="24" y="13" text-anchor="middle">10月</text><text id="calendar-date" class="calendar-date" x="24" y="39" text-anchor="middle">21</text></svg></span><span class="app-name">日历</span></button>
+        <button class="app" type="button" aria-label="时钟" data-app-id="clock" data-open-app="clock"><span class="icon clock"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#f9fafb"/><g stroke="#252a31" stroke-width="1.4" stroke-linecap="round"><path d="M24 8v3M24 37v3M8 24h3M37 24h3M12.7 12.7l2.1 2.1M33.2 33.2l2.1 2.1M35.3 12.7l-2.1 2.1M14.8 33.2l-2.1 2.1"/></g><path d="M24 14v10l7 5" fill="none" stroke="#333943" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 10v20" stroke="#ff9f0a" stroke-width="1.2" stroke-linecap="round"/><circle cx="24" cy="24" r="2" fill="#ff9f0a"/></svg></span><span class="app-name">时钟</span></button>
+        <button class="app" type="button" aria-label="天气" data-app-id="weather" data-open-app="weather"><span class="icon weather"><img src="./天气/天气logo.png" alt="" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block"></span><span class="app-name">天气</span></button>
+        <button class="app" type="button" aria-label="备忘录" data-app-id="notes" data-open-app="notes"><span class="icon notes-app-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#fff"/><path fill="#ffd34a" d="M0 0h64v22H0z"/><path d="M11 34h42M11 44h42M11 54h42" stroke="#c9c9cc" stroke-width="2"/><path d="M0 23h64" stroke="#d6ad35" stroke-width="1" stroke-dasharray="2 2"/></svg></span><span class="app-name">备忘录</span></button>
+      </div></section>
+      <section class="home-page" aria-label="主屏幕第2页"><div class="app-grid home-page-grid">
+        <button class="app" type="button" aria-label="相册" data-app-id="photos" data-open-app="photos"><span class="icon"><img class="icon-image" src="./相册/相册图标.webp" alt="" draggable="false"></span><span class="app-name">相册</span></button>
+        <button class="app" type="button" aria-label="音乐" data-app-id="music" data-open-app="music"><span class="icon"><img class="icon-image" src="./音乐/音乐图标.webp" alt="" draggable="false"></span><span class="app-name">音乐</span></button>
+        <button class="app" type="button" aria-label="Tiktok" data-app-id="tiktok" data-open-app="tiktok"><span class="icon"><img class="icon-image" src="./tiktok/tt图标.png" alt="" draggable="false"></span><span class="app-name">Tiktok</span></button>
+        <button class="app" type="button" aria-label="X" data-app-id="x" data-open-app="x"><span class="icon"><img class="icon-image" src="./X/x图标.png" alt="" draggable="false"></span><span class="app-name">X</span></button>
+        <button class="app" type="button" aria-label="相機"><span class="icon camera"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#d9dde2" d="M16 10h6l2.4 3H35a5 5 0 0 1 5 5v17a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V18a5 5 0 0 1 5-5h1z"/><circle cx="24" cy="26" r="9" fill="#545b65"/><circle cx="24" cy="26" r="6.2" fill="#1d2836"/><circle cx="21.8" cy="23.8" r="2" fill="#89a5c5"/><circle cx="34" cy="18" r="1.4" fill="#515a65"/></svg></span><span class="app-name">相機</span></button>
+        <button class="app" type="button" aria-label="设置"><span class="icon settings"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#f1f3f6" d="m42 27 .1-6-4.6-1.1a14 14 0 0 0-1.5-3.6l2.5-4-4.3-4.2-4 2.4a14 14 0 0 0-3.7-1.5L25.4 4h-6l-1.1 4.6a14 14 0 0 0-3.6 1.5l-4-2.5-4.2 4.3 2.4 4a14 14 0 0 0-1.5 3.7L3 20.6v6l4.6 1.1a14 14 0 0 0 1.5 3.6l-2.5 4 4.3 4.2 4-2.4a14 14 0 0 0 3.7 1.5l1.1 4.6h6l1.1-4.6a14 14 0 0 0 3.6-1.5l4 2.5 4.2-4.3-2.4-4a14 14 0 0 0 1.5-3.7z" transform="translate(3 2) scale(.9)"/><circle cx="24" cy="24" r="7" fill="#78818d"/><circle cx="24" cy="24" r="4.5" fill="#dce0e5"/></svg></span><span class="app-name">设置</span></button>
+        <button class="app" type="button" aria-label="微博" data-app-id="weibo" data-open-app="weibo"><span class="icon"><img class="icon-image" src="./微博/微博图标.png" alt="" draggable="false"></span><span class="app-name">微博</span></button>
+        <button class="app" type="button" aria-label="우리동네GS" data-app-id="gs" data-open-app="gs"><span class="icon"><img class="icon-image" src="./外卖/外卖图标.png" alt="" draggable="false"></span><span class="app-name gs-app-label">우리동네GS</span></button>
+        <button class="app" type="button" aria-label="Instagram" data-app-id="ig" data-open-app="ig"><span class="icon"><img class="icon-image" src="./ig/ig图标.png" alt="" draggable="false"></span><span class="app-name">IG</span></button>
+        <button class="app" type="button" aria-label="KakaoTalk" data-app-id="kakaotalk" data-open-app="kakaotalk"><span class="icon"><img src="./kkt/图标.png" alt="" draggable="false" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></span><span class="app-name kkt-app-label">KakaoTalk</span></button>
+      </div></section>
     </main>
+    <nav class="home-page-dots" aria-label="主屏幕页码"><button class="is-current" type="button" data-home-page="0" aria-label="第1页" aria-current="page"><span></span></button><button type="button" data-home-page="1" aria-label="第2页"><span></span></button></nav>
 
     <nav class="app-dock" aria-label="Dock 常用应用">
-      <button class="app" type="button" aria-label="电话"><span class="icon phone"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M14.2 7.5c1.2-.5 2.6 0 3.2 1.2l3.1 6.8c.5 1.1.2 2.4-.7 3.2l-2.5 2.1a28 28 0 0 0 10 10l2.1-2.5c.8-.9 2.1-1.2 3.2-.7l6.8 3.1c1.2.6 1.7 2 1.2 3.2l-1.8 4.4c-.5 1.2-1.7 2-3 2-17.5-.6-31.5-14.6-32.1-32.1 0-1.3.8-2.5 2-3z"/></svg></span><span class="app-name">电话</span></button>
+      <button class="app" type="button" aria-label="电话" data-app-id="phone" data-open-app="phone"><span class="icon phone"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M14.2 7.5c1.2-.5 2.6 0 3.2 1.2l3.1 6.8c.5 1.1.2 2.4-.7 3.2l-2.5 2.1a28 28 0 0 0 10 10l2.1-2.5c.8-.9 2.1-1.2 3.2-.7l6.8 3.1c1.2.6 1.7 2 1.2 3.2l-1.8 4.4c-.5 1.2-1.7 2-3 2-17.5-.6-31.5-14.6-32.1-32.1 0-1.3.8-2.5 2-3z"/></svg></span><span class="app-name">电话</span></button>
       <button class="app" type="button" aria-label="信息" data-app-id="imessage" data-open-app="imessage"><span class="icon messages"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#fff" d="M24 7C13.5 7 5 13.9 5 22.4c0 4.8 2.7 9.1 7 11.9-.4 2.1-1.5 4.1-3.2 5.8-.5.5-.1 1.4.6 1.3 4.1-.5 7.4-2 9.8-4.1 1.5.4 3.1.6 4.8.6 10.5 0 19-6.9 19-15.4S34.5 7 24 7"/></svg></span><span class="app-name">信息</span></button>
       <button class="app" type="button" aria-label="Safari"><span class="icon safari"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="#1598e8"/><circle cx="24" cy="24" r="17" fill="#f8fcff"/><path fill="#ff4b57" d="m31 13-5.2 13.1L17 35l5.2-13.1z"/><path fill="#147ddb" d="m17 35 5.2-13.1L31 13l-5.2 13.1z"/><circle cx="24" cy="24" r="2" fill="#fff"/></svg></span><span class="app-name">Safari</span></button>
       <button class="app" type="button" aria-label="音乐" data-app-id="music" data-open-app="music"><span class="icon"><img class="icon-image" src="./音乐/音乐图标.webp" alt="" draggable="false"></span><span class="app-name">音乐</span></button>
     </nav>
     <button class="home-indicator" id="relock-button" type="button" aria-label="返回锁屏"></button>
   </div>
+  </section>
+
+  <section class="app-view xapp-view" id="x-view" aria-label="X" aria-hidden="true">
+    <div class="xapp-shell">
+      <div class="xapp-status"><span id="x-status-time">9:41</span><svg viewBox="0 0 60 16" aria-label="信号、Wi-Fi和电池"><path d="M1 14h3V9H1zm5 0h3V6H6zm5 0h3V3h-3zm5 0h3V0h-3" fill="currentColor"/><path d="M23 5q7-7 14 0m-11 3q4-4 8 0m-5.5 3 1.5 1.5 1.5-1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="42" y="2" width="15" height="11" rx="3" fill="none" stroke="currentColor"/><rect x="44" y="4" width="11" height="7" rx="1" fill="currentColor"/><path d="M59 5v5" stroke="currentColor"/></svg></div>
+      <section class="xapp-page" id="xapp-feed-page" aria-label="X主页">
+        <header class="xapp-header"><button class="xapp-icon-button" type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button><svg class="xapp-logo" viewBox="0 0 24 24" aria-label="X"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.5 22H2.3l8.2-9.4L.8 2h6.5l4.5 6.8ZM17.8 20h1.8L6.3 4H4.4Z" fill="currentColor"/></svg><span class="xapp-icon-button" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg></span></header>
+        <div class="xapp-feed-tabs"><span class="is-current">为你推荐</span><span>正在关注</span></div>
+        <div class="xapp-feed-scroll" id="xapp-feed" aria-label="帖子列表，可上下滚动"></div>
+      </section>
+      <section class="xapp-page" id="xapp-room-page" aria-label="语音房" hidden>
+        <header class="xapp-header"><button class="xapp-icon-button" type="button" id="xapp-room-back" aria-label="返回X主页"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button><span class="xapp-room-header-title">空间</span><button class="xapp-leave" type="button" id="xapp-room-leave">离开</button></header>
+        <div class="xapp-room-scroll"><p class="xapp-room-live"><span>直播</span> · <span id="xapp-room-count">17/17 在线</span></p><h1 id="xapp-room-title">一起来聊</h1><div class="xapp-room-host" id="xapp-room-host"></div><div class="xapp-users" id="xapp-users" aria-label="16位房间用户"></div></div>
+        <button class="xapp-chat-fab" type="button" id="xapp-chat-open" aria-label="查看语音房聊天记录" aria-controls="xapp-chat-backdrop" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M20.5 11a8.5 8.5 0 0 1-8.5 8.5H8l-4 2v-6a8.5 8.5 0 1 1 16.5-4.5Z"/></svg><span id="xapp-chat-count"></span></button>
+      </section>
+      <nav class="xapp-tabbar" aria-label="X底部导航">
+        <button class="is-selected" type="button" id="xapp-home-tab" aria-current="page" aria-label="主页"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/></svg><span>主页</span></button>
+        <button type="button" disabled aria-disabled="true" aria-label="搜索"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg><span>搜索</span></button>
+        <button type="button" disabled aria-disabled="true" aria-label="空间"><svg viewBox="0 0 24 24"><circle cx="8" cy="7" r="3"/><circle cx="18" cy="7" r="2.5"/><path d="M2 21v-3a6 6 0 0 1 12 0v3m2-8a5 5 0 0 1 6 5v3"/></svg><span>空间</span></button>
+        <button type="button" disabled aria-disabled="true" aria-label="通知"><svg viewBox="0 0 24 24"><path d="M4 17h16l-2-3V9A6 6 0 0 0 6 9v5Zm5 3a3 3 0 0 0 6 0"/></svg><span>通知</span></button>
+        <button type="button" disabled aria-disabled="true" aria-label="私信"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg><span>私信</span></button>
+      </nav>
+    </div>
+    <div class="xapp-sheet-backdrop" id="xapp-chat-backdrop" aria-hidden="true"><section class="xapp-sheet" role="dialog" aria-modal="true" aria-labelledby="xapp-chat-title"><div class="xapp-sheet-handle" aria-hidden="true"></div><header><h2 id="xapp-chat-title">语音房聊天记录</h2><button class="xapp-icon-button" type="button" id="xapp-chat-close" aria-label="关闭聊天记录"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header><div class="xapp-chat-scroll" id="xapp-chat-messages"></div></section></div>
+  </section>
+
+  <section class="app-view ig-view" id="ig-view" aria-label="Instagram" aria-hidden="true"><div class="ig-shell"><div class="ig-main" id="ig-main"><header class="ig-nav"><button type="button" data-close-app aria-label="返回主屏幕" data-ig-icon="back"></button><strong data-ig-username>fakezhenzhen</strong><span aria-hidden="true">•••</span></header><main class="ig-scroll" id="ig-scroll"><section class="ig-profile"><div class="ig-profile-row"><button type="button" class="ig-story-ring" id="ig-story-open" aria-label="查看Story"><span class="ig-avatar" data-ig-icon="user"></span></button><div class="ig-details"><h1 id="ig-name">不是珍珍</h1><div class="ig-stats" id="ig-stats"></div></div></div><div class="ig-profile-actions"><span>编辑个人主页</span><span>分享个人主页</span></div></section><div class="ig-highlights" id="ig-highlights" aria-label="精选集，可左右滑动" tabindex="0"></div><div class="ig-content-tabs" aria-label="内容分类"><span data-ig-icon="grid"></span><span data-ig-icon="reels"></span><span data-ig-icon="user"></span></div><div class="ig-grid" id="ig-grid"></div></main><nav class="ig-tabbar" aria-label="Instagram底栏"><span data-ig-icon="home"></span><span data-ig-icon="search"></span><span data-ig-icon="plus"></span><span data-ig-icon="reels"></span><span data-ig-icon="user" aria-label="个人主页"></span></nav></div><div class="ig-story" id="ig-story" hidden><section class="ig-story-card" role="dialog" aria-modal="true" aria-label="Story查看页"><img class="ig-story-image" src="./其他/手机壁纸.png" alt="临时Story图片"><header class="ig-story-header"><strong data-ig-username>fakezhenzhen</strong><button type="button" id="ig-story-close" aria-label="关闭Story">×</button></header><div class="ig-story-music"><strong>우주를 줄게 · 脸红的思春期</strong><small>临时Story音乐</small><progress id="ig-story-progress" max="100" value="0" aria-label="播放进度"></progress><button type="button" id="ig-story-play">播放</button><small id="ig-audio-status" role="status"></small></div></section></div></div></section>
+  <section class="app-view phone-view" id="phone-view" aria-label="电话" aria-hidden="true"><div class="phone-shell"><header class="phone-nav"><div class="phone-nav-left"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><button type="button" disabled>编辑</button></div><button type="button" disabled aria-label="新增（预留）"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button></header><main class="phone-scroll" id="phone-scroll"><h1 id="phone-page-title">最近通话</h1><div id="phone-history"></div><section id="phone-voicemail" hidden aria-label="语音留言"><p class="phone-voicemail-note">语音留言模拟 · 暂无音频</p><div id="phone-voicemail-list"></div></section></main><nav class="phone-tabbar" aria-label="电话功能"><button type="button" disabled><span data-phone-icon="favorites"></span>个人收藏</button><button type="button" data-phone-tab="recents" aria-current="page"><span data-phone-icon="recents"></span>最近通话</button><button type="button" disabled><span data-phone-icon="contacts"></span>联系人</button><button type="button" disabled><span data-phone-icon="keypad"></span>拨号键盘</button><button type="button" data-phone-tab="voicemail"><span data-phone-icon="voicemail"></span>语音留言</button></nav></div></section>
+  <section class="app-view clock-view" id="clock-view" aria-label="时钟" aria-hidden="true"><div class="clock-shell"><header class="clock-nav"><div class="clock-nav-actions"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><button type="button" disabled aria-label="编辑（预留）">编辑</button></div><button type="button" disabled aria-label="新增（预留）"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button></header><main class="clock-scroll" id="clock-scroll"><h1 id="clock-page-title">闹钟</h1><section class="clock-panel" id="clock-alarms" aria-label="闹钟"><div id="clock-alarm-list"></div></section><section class="clock-panel" id="clock-world" aria-label="世界时钟" hidden><div id="clock-world-list"></div></section></main><nav class="clock-tabbar" role="tablist" aria-label="时钟功能"><button type="button" role="tab" data-clock-tab="alarms" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2M3 3 1 6m20-3 2 3M6 20l-2 3m14-3 2 3"/></svg>闹钟</button><button type="button" role="tab" data-clock-tab="world" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M2 12h20M4 6h16M4 18h16"/></svg>世界时钟</button></nav></div></section>
+  <section class="app-view calendar-view" id="calendar-view" aria-label="日历" aria-hidden="true"><div class="calendar-shell"><header class="calendar-nav"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>返回</button><span>日历</span></header><main class="calendar-scroll" id="calendar-scroll"><header class="calendar-month-header"><button type="button" id="calendar-previous" aria-label="上个月"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><h1 id="calendar-month-title" aria-live="polite">2026年10月</h1><button type="button" id="calendar-next" aria-label="下个月"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></header><div class="calendar-weekdays" aria-hidden="true"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="calendar-grid" id="calendar-grid" aria-label="选择日期"></div><section class="calendar-agenda" aria-live="polite"><h2 id="calendar-selected-date"></h2><div id="calendar-agenda-list"></div></section></main></div></section>
+  <section class="app-view gs-view" id="gs-view" aria-label="우리동네GS 外卖" aria-hidden="true"><div class="gs-shell">
+    <section class="gs-page" id="gs-home"><header class="gs-nav"><button type="button" data-close-app aria-label="返回主屏幕" data-gs-icon="back"></button><strong>邻里 GS</strong><button type="button" data-gs-placeholder aria-label="智能客服" data-gs-icon="user"></button><button type="button" data-gs-placeholder aria-label="通知" data-gs-icon="bell"></button><button type="button" data-gs-placeholder aria-label="购物袋" data-gs-icon="bag"></button></header>
+    <main class="gs-scroll" id="gs-home-scroll"><section class="gs-banner"><span>提前预订</span><h1>新鲜泡菜 · 产地直送<br>新韩卡支付享优惠</h1><p>选择您希望的日期<br>轻松收货。</p><small>GS25</small></section><div class="gs-stores">
+<section class="gs-store"><h2>GS25</h2><p>有趣的便利店</p><div class="gs-store-actions"><button type="button" data-gs-placeholder><span data-gs-icon="bag"></span>自提</button><button type="button" id="gs-delivery" class="gs-delivery"><span data-gs-icon="delivery"></span>配送</button></div><button type="button" class="gs-reserve" data-gs-placeholder><span data-gs-icon="pin"></span>便利店预订</button></section><section class="gs-store gs-fresh"><h2>GS THE FRESH</h2><p>美味新鲜 No.1 超市</p><div class="gs-store-actions"><button type="button" data-gs-placeholder><span data-gs-icon="bag"></span>自提</button><button type="button" data-gs-placeholder><span data-gs-icon="delivery"></span>配送</button></div><button type="button" class="gs-reserve" data-gs-placeholder><span data-gs-icon="pin"></span>超市预订</button></section></div><div class="gs-services"><button type="button" class="gs-wine" data-gs-placeholder><strong>WINE25 PLUS</strong><span>免费会员＋优惠券</span></button><button type="button" data-gs-placeholder><span data-gs-icon="search"></span>查找库存</button><button type="button" data-gs-placeholder><span data-gs-icon="delivery"></span>快递预约</button></div><div class="gs-fridges"><button type="button" data-gs-placeholder><strong>我的冰箱</strong><span>赠品领取与预订</span><i data-gs-icon="fridge"></i></button><button type="button" data-gs-placeholder><strong>共享冰箱</strong><span>一起分享寄存商品</span><i data-gs-icon="fridge"></i></button></div><section class="gs-frequent"><h2>常用服务</h2><button type="button" data-gs-placeholder>优惠券与会员权益</button></section></main>
+    <nav class="gs-tabbar" aria-label="外卖导航"><button type="button" aria-current="page"><span data-gs-icon="home"></span><span>首页</span></button><button type="button" data-gs-placeholder><span data-gs-icon="search"></span><span>搜索</span></button><button type="button" data-gs-placeholder><span data-gs-icon="qr"></span><span>扫码·礼券支付</span></button><button type="button" id="gs-orders-open"><span data-gs-icon="orders"></span><span>订单记录</span></button><button type="button" data-gs-placeholder><span data-gs-icon="user"></span><span>我的</span></button></nav></section><section class="gs-page" id="gs-products" hidden><header class="gs-products-nav"><button type="button" id="gs-back" aria-label="返回外卖主页" data-gs-icon="back"></button><h1>挑选货品</h1><span></span></header><main class="gs-shop-scroll" id="gs-product-list" aria-label="配送商品"></main><footer class="gs-paybar"><strong data-gs-total>总价：0韩元</strong><button type="button" class="gs-cart-button" id="gs-cart-open" aria-label="打开购物车"><span data-gs-icon="bag"></span><span id="gs-cart-count">0</span></button><button type="button" class="gs-primary" id="gs-checkout-open" disabled>结账</button></footer></section><section class="gs-page" id="gs-checkout" hidden><header class="gs-products-nav"><button type="button" id="gs-checkout-back" aria-label="返回商品列表" data-gs-icon="back"></button><h1>确认订单</h1><span></span></header><main class="gs-shop-scroll"><section class="gs-order-card"><h2>收货地址</h2><p>서울특별시 용산구 소월로 322</p><p>Park 先生</p><p>+82 20050130</p></section><section class="gs-order-card"><h2>购买商品</h2><div id="gs-order-items"></div></section><section class="gs-order-card"><h2>支付方式</h2><button type="button" class="gs-payment-choice" id="gs-payment-open"></button><p class="gs-simulation">模拟订单，不产生真实扣款。</p></section></main><footer class="gs-paybar"><strong data-gs-total>总价：0韩元</strong><button type="button" class="gs-primary" id="gs-pay-open">确认支付</button></footer></section>
+<section class="gs-page" id="gs-success" hidden><header class="gs-products-nav"><span></span><h1>订单结果</h1><span></span></header><main class="gs-products-empty"><span class="gs-success-check">✓</span><h2>支付成功！</h2><p>模拟支付已完成，购物车已清空。</p><p id="gs-order-save-status" role="status"></p><button type="button" class="gs-primary" id="gs-success-orders">查看订单</button><button type="button" class="gs-primary" id="gs-success-home">返回外卖主页</button></main></section>
+<section class="gs-page" id="gs-orders" hidden><header class="gs-products-nav"><button type="button" id="gs-orders-back" aria-label="返回外卖主页" data-gs-icon="back"></button><h1>订单记录</h1><span></span></header><main class="gs-shop-scroll" id="gs-orders-list" aria-label="历史订单"></main></section>
+<div class="gs-shop-modal" id="gs-shop-modal" hidden><div class="gs-modal-shade" data-gs-modal-close></div><section class="gs-shop-sheet" role="dialog" aria-modal="true" aria-labelledby="gs-sheet-title" tabindex="-1"><header><h2 id="gs-sheet-title"></h2><button type="button" data-gs-modal-close aria-label="关闭面板">×</button></header><div class="gs-sheet-body" id="gs-sheet-body"></div></section></div>
+<div class="gs-toast" id="gs-toast" role="status" hidden></div></div></section>
+  <section class="app-view weibo-view" id="weibo-view" aria-label="微博" aria-hidden="true"><div class="weibo-shell"><div class="weibo-scroll" id="weibo-scroll" tabindex="0" aria-label="微博主页，可上下滑动">
+    <header class="weibo-nav"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><strong>微博</strong><button type="button" aria-label="搜索（示意）" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button></header>
+    <div class="weibo-cover" aria-hidden="true"></div><section class="weibo-profile" aria-label="个人资料"><div class="weibo-identity"><img class="weibo-avatar" src="./微博/微博头像.png" alt="不是真真的头像"><div><h1 id="weibo-name">不是真真</h1><p class="weibo-user-id" id="weibo-user-id"></p></div></div><p class="weibo-stats" id="weibo-stats"></p><p class="weibo-bio" id="weibo-bio"></p><div class="weibo-edit">编辑个人资料</div><div class="weibo-profile-tabs"><span>精选</span><span class="is-selected">微博</span><span>相册</span></div></section>
+    <h2 class="weibo-feed-heading">全部微博</h2><div class="weibo-feed" id="weibo-feed"></div>
+    </div><nav class="weibo-tabbar" aria-label="微博底部导航">
+<button type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/></svg><span>首页</span></button><button type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg><span>视频</span></button><button type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6Z"/></svg><span>发现</span></button><button type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v13H9l-6 4Z"/></svg><span>消息</span></button><button type="button" class="is-selected" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M3 22v-2a9 9 0 0 1 18 0v2"/></svg><span>我</span></button></nav></div></section>
+  <section class="app-view notes-view" id="notes-view" aria-label="备忘录" aria-hidden="true"><div class="notes-shell">
+    <section class="notes-page" id="notes-list-page"><header class="notes-nav"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button><button type="button" aria-label="更多选项（示意）"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></header>
+      <main class="notes-scroll"><h1>备忘录</h1><p class="notes-count">8 个备忘录</p><div class="notes-search"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>搜索</span></div><div class="notes-folders" id="notes-folders"></div><h2>备忘录</h2><div class="notes-list" id="notes-list"></div></main>
+      <footer class="notes-footer"><span>8 个备忘录</span><button type="button" id="notes-compose" aria-label="新建备忘录占位页"><svg viewBox="0 0 24 24"><path d="M13 4H5v16h15v-8M12 15l1-5 7-7 3 3-7 7-4 2Z"/></svg></button></footer>
+    </section>
+    <section class="notes-page" id="notes-detail-page" hidden><header class="notes-nav"><button class="notes-back" type="button" id="notes-back"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg><span>备忘录</span></button></header><main class="notes-scroll notes-detail-scroll" aria-label="备忘录详情占位页"></main></section>
+  </div></section>
+  <section class="app-view weather-view" id="weather-view" aria-label="天气" aria-hidden="true">
+    <div class="weather-shell">
+      <header class="weather-nav"><button type="button" data-close-app aria-label="返回主屏幕"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button><span>天气</span><span class="weather-example">示例</span></header>
+      <main class="weather-scroll" id="weather-scroll" tabindex="0" aria-label="天气预报">
+        <div class="weather-current" aria-live="polite"><h1 id="weather-city">首尔</h1><div id="weather-symbol" class="weather-symbol"></div><strong id="weather-temperature">18°</strong><p id="weather-condition">多云</p><p id="weather-range">最高 21°　最低 14°</p></div>
+        <section class="weather-card"><h2>每小时天气 · 示例预报</h2><div class="weather-hourly" id="weather-hourly"></div></section>
+        <section class="weather-card"><h2>未来五天天气 · 示例预报</h2><div id="weather-days"></div></section>
+        <p class="weather-note">以上为示例天气数据，未连接实时天气服务。</p>
+      </main>
+      <footer class="weather-toolbar"><span>示例天气</span><button type="button" id="weather-cities-button" aria-label="切换地区" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3" cy="6" r=".7"/><circle cx="3" cy="12" r=".7"/><circle cx="3" cy="18" r=".7"/></svg></button></footer>
+    </div>
+    <div class="weather-modal" id="weather-modal" hidden><div class="weather-backdrop" data-weather-dismiss></div><section class="weather-sheet" role="dialog" aria-modal="true" aria-labelledby="weather-sheet-title"><div class="weather-handle"></div><header><h2 id="weather-sheet-title">切换地区</h2><button type="button" data-weather-dismiss aria-label="关闭地区面板">×</button></header><div id="weather-city-options"></div></section></div>
   </section>
 
   <section class="app-view photos-view" id="photos-view" aria-label="相册精选集" aria-hidden="true">
@@ -1864,22 +1966,7 @@
     </div>
   </section>
 
-  <section class="app-view kakao-view" id="kakaotalk-view" aria-label="KakaoTalk 模拟界面" aria-hidden="true">
-    <div class="mock-app">
-      <header class="mock-app-header">
-        <button class="mock-back" type="button" data-close-app><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>返回</button>
-        <h1 class="mock-title"><img class="icon-image" src="./KakaoTalk图标.jpeg" alt="">KakaoTalk</h1>
-        <span class="mock-header-space" aria-hidden="true"></span>
-      </header>
-      <p class="mock-caption">本地模拟聊天列表</p>
-      <p class="kakao-list-label">聊天</p>
-      <div class="kakao-contact-row">
-        <span class="kakao-contact-avatar">HJ</span>
-        <span class="kakao-contact-name">HJin0105</span>
-      </div>
-      <p class="mock-caption">此页面为界面示意，不含真实聊天记录。</p>
-    </div>
-  </section>
+  <section class="app-view kkt-view" id="kakaotalk-view" aria-label="KakaoTalk" aria-hidden="true"><div class="kkt-shell"><section class="kkt-page" id="kkt-list-page"><header class="kkt-nav"><button type="button" data-close-app aria-label="返回主屏幕" data-kkt-icon="back"></button><h1 id="kkt-title">好友</h1><button type="button" disabled aria-label="搜索" data-kkt-icon="search"></button><button type="button" disabled aria-label="添加好友" data-kkt-icon="add"></button><button type="button" disabled aria-label="设置" data-kkt-icon="settings"></button></header><main class="kkt-scroll" id="kkt-list-scroll"><div class="kkt-self" id="kkt-self"><span class="kkt-avatar" data-kkt-icon="user"></span><span class="kkt-friend-copy"><strong>Hanjin</strong><small>TWS Hanjin</small></span></div><h2 class="kkt-list-label" id="kkt-list-label">好友 2</h2><div id="kkt-friends"></div></main><nav class="kkt-tabbar" aria-label="KakaoTalk导航"><button type="button" disabled><span data-kkt-icon="user"></span>好友</button><button type="button" class="is-selected" aria-current="page" data-kkt-tab="chats"><span data-kkt-icon="chat"></span>聊天</button><button type="button" disabled><span data-kkt-icon="search"></span>发现</button><button type="button" disabled><span data-kkt-icon="more"></span>更多</button></nav></section><section class="kkt-page kkt-chat-page" id="kkt-chat-page" hidden><header class="kkt-nav kkt-chat-nav"><button type="button" id="kkt-chat-back" aria-label="返回好友列表" data-kkt-icon="back"></button><h1 id="kkt-chat-name"></h1><span data-kkt-icon="more"></span></header><main class="kkt-messages" id="kkt-messages" aria-label="聊天内容"></main><div class="kkt-composer"><span data-kkt-icon="plus"></span><input type="text" placeholder="输入消息" aria-label="消息输入框示意" readonly><button type="button" disabled aria-label="发送暂未开放" data-kkt-icon="send"></button></div></section></div></section>
 
   <section class="app-view tiktok-view" id="tiktok-view" aria-label="Tiktok" aria-hidden="true">
     <div class="tiktok-shell">
@@ -1934,7 +2021,6 @@
       <div class="wechat-page" id="wechat-chat-page" aria-label="聊天详情" aria-hidden="true">
         <header class="wechat-header"><button class="wechat-back" type="button" data-wechat-back="chats" aria-label="返回微信列表"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button><h1 id="wechat-chat-title">聊天</h1><button class="wechat-header-tool" type="button" aria-label="聊天设置"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></button></header>
         <div class="wechat-message-scroll" id="wechat-message-scroll" role="region" aria-label="聊天记录，可上下滚动" tabindex="0"></div>
-        <div class="wechat-quick-replies" id="wechat-quick-replies" aria-label="快捷回复" hidden></div>
         <div class="wechat-composer" aria-label="微信消息输入栏">
           <button type="button" aria-label="语音输入"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.3"/><path d="M9.5 10v4a2.5 2.5 0 0 0 5 0v-4a2.5 2.5 0 0 0-5 0ZM7 12a5 5 0 0 0 10 0m-5 5v3m-3 0h6"/></svg></button>
           <span class="wechat-composer-input"></span>
@@ -1998,18 +2084,12 @@
           <span>搜索</span>
         </div>
         <div class="messages-list-scroll" id="messages-list-scroll">
-          <button class="message-conversation-row" type="button" id="hanjin-conversation" aria-label="打开 Hanjin 会话">
-            <span class="message-unread-dot" id="message-unread-dot" aria-hidden="true"></span>
-            <span class="message-default-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21a8 8 0 0 1 16 0" fill="currentColor"/></svg></span>
-            <span class="message-row-copy"><span class="message-row-name">Hanjin</span><span class="message-row-preview" id="message-row-preview"></span></span>
-            <span class="message-row-meta"><span>9月1日</span><svg class="message-row-chevron" viewBox="0 0 8 14" aria-hidden="true"><path d="m1 1 5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </button>
-          <div class="messages-row-divider" aria-hidden="true"></div>
+          <p class="messages-empty-state" style="margin:64px 0;text-align:center;color:#8e8e93;font-size:15px">无信息</p>
         </div>
         <div class="home-indicator" aria-hidden="true"></div>
       </section>
 
-      <section class="messages-page" id="messages-detail-page" aria-label="与 Hanjin 的信息对话" aria-hidden="true">
+      <section class="messages-page" id="messages-detail-page" aria-label="信息对话" aria-hidden="true">
         <div class="messages-status" aria-label="状态栏">
           <span id="messages-detail-time">9:41</span>
           <span class="messages-status-icons" aria-label="移动信号、Wi-Fi、电池">
@@ -2020,13 +2100,12 @@
         </div>
         <header class="messages-detail-header">
           <button class="messages-back" type="button" id="messages-back-to-list" aria-label="返回信息列表"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>信息</span></button>
-          <div class="messages-contact-heading"><span class="messages-contact-name">Hanjin</span><span class="messages-contact-number">+82 20060105</span></div>
+          <div class="messages-contact-heading"><span class="messages-contact-name"></span><span class="messages-contact-number"></span></div>
           <div class="messages-header-actions" aria-label="通话选项">
             <button class="message-icon-button" type="button" aria-label="语音通话"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3H4.8A1.8 1.8 0 0 0 3 4.8C3 13.7 10.3 21 19.2 21a1.8 1.8 0 0 0 1.8-1.8V17l-5-2-1.5 2.2a15.4 15.4 0 0 1-6.9-6.9L9.8 8 7 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></button>
           </div>
         </header>
         <div class="conversation-scroll" id="conversation-scroll" aria-label="对话内容，可上下滚动">
-          <div class="messages-date-divider">2026年9月1日</div>
           <div class="messages-bubbles" id="messages-bubbles"></div>
         </div>
         <div class="messages-composer" aria-label="信息输入栏示意">
@@ -2061,6 +2140,7 @@
       document.querySelector("#music-status-time").textContent = timeText;
       document.querySelector("#wechat-status-time").textContent = timeText;
       document.querySelector("#tiktok-status-time").textContent = timeText;
+      document.querySelector("#x-status-time").textContent = timeText;
       document.querySelector("#calendar-month").textContent = `${now.getMonth() + 1}月`;
       document.querySelector("#calendar-date").textContent = now.getDate();
     };
@@ -2171,15 +2251,6 @@
     const passcodeError = document.querySelector("#passcode-error");
     const passcodeKeys = document.querySelectorAll("[data-digit]");
     const appViews = [...document.querySelectorAll(".app-view")];
-    // 保留联系人及会话入口；消息记录已清空。
-    const messagesConversation = {
-      id: "hanjin-2026-09-01",
-      contactName: "Hanjin",
-      phoneNumber: "+82 20060105",
-      date: "2026-09-01",
-      unread: true,
-      messages: []
-    };
     const appBadgeStorageKey = "phone-found-website:badge-counts:v1";
     const appBadgeWindowPrefix = "phone-found-badges:v1:";
     const readStoredBadgeCounts = () => {
@@ -2200,7 +2271,7 @@
       } catch (error) { /* Invalid tab state is ignored; the configured initial counts are used. */ }
       return {};
     };
-    const badgeCounts = { imessage: 1, photos: 0, music: 0 };
+    const badgeCounts = { imessage: 0, photos: 0, music: 0 };
     const registeredAppIds = new Set([...document.querySelectorAll(".home-screen .app")]
       .map((button) => button.dataset.appId || button.dataset.openApp)
       .filter(Boolean));
@@ -2209,10 +2280,21 @@
         badgeCounts[appId] = Math.floor(Number(count));
       }
     });
+    badgeCounts.imessage = 0;
     badgeCounts.photos = 0;
     badgeCounts.music = 0;
     badgeCounts.wechat = 0;
     badgeCounts.tiktok = 0;
+    badgeCounts.weather = 0;
+    badgeCounts.notes = 0;
+    badgeCounts.weibo = 0;
+    badgeCounts.gs = 0;
+    badgeCounts.calendar = 0;
+    badgeCounts.clock = 0;
+    badgeCounts.phone = 4;
+    badgeCounts.ig = 0;
+    badgeCounts.kakaotalk = 0;
+    badgeCounts.x = 0;
     const persistBadgeCounts = () => {
       const value = JSON.stringify(badgeCounts);
       try { window.localStorage.setItem(appBadgeStorageKey, value); } catch (error) { /* Continue with session/tab storage. */ }
@@ -2521,14 +2603,6 @@
     document.querySelector("#music-shuffle").addEventListener("click", () => showMusicToast("随机播放暂未开放"));
     document.querySelectorAll(".music-header-actions .music-header-icon[aria-label='添加音乐'], #music-playlists-page .music-header-icon[aria-label='添加播放列表']")
       .forEach((button) => button.addEventListener("click", () => showMusicToast("此功能暂未开放")));
-    const messagesBubbleContainer = document.querySelector("#messages-bubbles");
-    messagesBubbleContainer.innerHTML = messagesConversation.messages.map((message) => {
-      const emojiClass = message.presentation === "emoji" ? " is-emoji" : "";
-      return `<div class="message-bubble from-${message.sender}${emojiClass}" data-message-id="${message.id}">${escapeHTML(message.text)}</div>`;
-    }).join("");
-    document.querySelector("#message-row-preview").textContent = messagesConversation.messages[messagesConversation.messages.length - 1]?.text || "";
-    document.querySelector("#conversation-scroll .messages-date-divider").hidden = messagesConversation.messages.length === 0;
-    document.querySelector("#message-unread-dot").hidden = !messagesConversation.unread;
     updateAppBadges();
     let lastOpenedApp = null;
     let enteredPasscode = "";
@@ -2763,6 +2837,13 @@
     });
     document.querySelector("#photos-detail-back").addEventListener("click", closePhotosDetail);
     const closeAppViews = () => {
+      if (typeof stopPhoneVoicemail === "function") stopPhoneVoicemail();
+      if (typeof closeClockApp === "function") closeClockApp();
+      if (typeof closeIgStory === "function") closeIgStory();
+      if (typeof closeGsShopModal === "function") closeGsShopModal(false);
+      if (typeof stopNotesAudio === "function") stopNotesAudio();
+      if (typeof closeWeatherApp === "function") closeWeatherApp();
+      if (typeof closeXAppPanels === "function") closeXAppPanels();
       if (typeof exitTikTokApp === "function") exitTikTokApp();
       if (typeof cancelWechatCallFlow === "function") cancelWechatCallFlow();
       closePhotosDetail();
@@ -2781,15 +2862,6 @@
       document.querySelector("#messages-detail-page").classList.toggle("is-visible", showingDetail);
       document.querySelector("#messages-detail-page").setAttribute("aria-hidden", String(!showingDetail));
     };
-    document.querySelector("#hanjin-conversation").addEventListener("click", () => {
-      messagesConversation.unread = false;
-      document.querySelector("#message-unread-dot").hidden = true;
-      showMessagesPage("detail");
-      window.requestAnimationFrame(() => {
-        const scroller = document.querySelector("#conversation-scroll");
-        scroller.scrollTop = scroller.scrollHeight;
-      });
-    });
     document.querySelector("#messages-back-to-list").addEventListener("click", () => showMessagesPage("list"));
     const wechatShell = document.querySelector("#wechat-shell");
     const wechatPages = {
@@ -3063,7 +3135,10 @@
     document.querySelector("[data-wechat-open-moments]").addEventListener("click", () => showWechatPage("moments"));
     // 所有主屏幕 App 共用同一套角标清除逻辑；新 App 在按钮上填写 data-app-id 即可接入。
     document.querySelectorAll(".home-screen .app").forEach((appButton) => {
-      appButton.addEventListener("click", () => markAppRead(appButton.dataset.appId || appButton.dataset.openApp));
+      appButton.addEventListener("click", () => {
+        const appId = appButton.dataset.appId || appButton.dataset.openApp;
+        if (appId !== "kakaotalk") markAppRead(appId);
+      });
     });
     document.querySelectorAll("[data-open-app]").forEach((appButton) => {
       appButton.addEventListener("click", () => {
@@ -3079,6 +3154,16 @@
         if (selectedView.id === "music-view") showMusicPage("library");
         if (selectedView.id === "wechat-view") showWechatPage("chats");
         if (selectedView.id === "tiktok-view") openTikTokApp();
+        if (selectedView.id === "x-view") openXApp();
+        if (selectedView.id === "weather-view") openWeatherApp();
+        if (selectedView.id === "notes-view") openNotesApp();
+        if (selectedView.id === "weibo-view") openWeiboApp();
+        if (selectedView.id === "gs-view") openGsApp();
+        if (selectedView.id === "calendar-view") openCalendarApp();
+        if (selectedView.id === "ig-view") openIgApp();
+        if (selectedView.id === "kakaotalk-view") openKakaoTalkApp();
+        if (selectedView.id === "clock-view") openClockApp();
+        if (selectedView.id === "phone-view") openPhoneApp();
         selectedView.querySelector("[data-close-app]").focus({ preventScroll: true });
       });
     });
@@ -3103,7 +3188,34 @@
       }
     });
   </script>
+  <script src="./global/banner.js"></script>
   <script src="./微信/videoCall.js"></script>
   <script src="./tiktok/tiktok.js"></script>
+  <script src="./home/home.js"></script>
+  <script src="./X/xVoiceRoomChatData.js"></script>
+  <script src="./X/xPostsData.js"></script>
+  <script src="./X/x.js"></script>
+  <script src="./天气/weather.js"></script>
+  <script src="./备忘录/notesData.js"></script>
+  <script src="./备忘录/notes.js"></script>
+  <script src="./微博/weiboPostsData.js"></script>
+  <script src="./微博/weibo.js"></script>
+  <script src="./信息/smsData.js"></script>
+  <script src="./global/notifications.js"></script>
+  <script src="./信息/sms.js"></script>
+  <script src="./外卖/gsProducts.js"></script>
+  <script src="./外卖/gs.js"></script>
+  <script src="./外卖/initialOrders.js"></script>
+  <script src="./外卖/gsShop.js"></script>
+  <script src="./日历/calendarEvents.js"></script>
+  <script src="./日历/calendar.js"></script>
+  <script src="./ig/ig.js"></script>
+  <script src="./kkt/kktChatData.js"></script>
+  <script src="./kkt/kkt.js"></script>
+  <script src="./kkt/kktIncoming.js"></script>
+  <script src="./时钟/clock.js"></script>
+  <script src="./电话/callHistoryData.js"></script>
+  <script src="./电话/voicemailData.js"></script>
+  <script src="./电话/phone.js"></script>
 </body>
 </html>
