@@ -569,6 +569,9 @@
     .music-mini-copy span { color: #b8b8bd; font-size: 12px; }
     .music-mini-action { width: 42px; height: 42px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #fff; background: transparent; }
     .global-music-player svg { width: 22px; height: 22px; fill: currentColor; }
+    .global-music-player .music-mini-close { position: absolute; z-index: 3; top: -8px; left: -5px; display: grid; place-items: center; width: 20px; height: 20px; padding: 0; border: 1px solid #ffffff50; border-radius: 50%; background: rgba(30,30,32,.65); color: #fff; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; }
+    .global-music-player .music-mini-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; }
+    .music-mini-close:active { opacity: .7; }
     .music-mini-open:active,.music-mini-action:active { opacity: .72; transform: scale(.94); }
     .music-tabbar { min-height: 64px; display: grid; grid-template-columns: repeat(5,1fr); align-items: center; border: 1px solid #ffffff1b; border-radius: 19px; background: #1b1b1ded; }
     .music-tab { min-width: 0; display: grid; justify-items: center; gap: 3px; padding: 5px 0; color: #a6a6ac; font-size: 10px; line-height: 1.2; }
@@ -1946,6 +1949,7 @@
   </section>
 
   <div class="global-music-player" id="music-mini-player" role="group" aria-label="全局迷你播放器" hidden>
+    <button class="music-mini-close" id="music-mini-close" type="button" aria-label="关闭音乐播放器" title="关闭音乐播放器"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>
     <button class="music-mini-open" id="music-mini-open" type="button" aria-label="打开当前歌曲播放器"><span class="music-mini-art"><img id="music-mini-art" alt="" draggable="false"></span><span class="music-mini-copy"><strong id="music-mini-title">Stay with me</strong><span id="music-mini-artist"></span></span></button>
     <button class="music-mini-action" id="music-mini-toggle" type="button" aria-label="播放" title="播放"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
     <button class="music-mini-action" id="music-mini-next" type="button" aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v14l10-7zM17 5v14l5-7z"/></svg></button>
@@ -2533,6 +2537,23 @@
       stopMusicFallback();
       updateMusicPlayback();
     };
+    const closeMusicPlayer = (event) => {
+      event.stopPropagation();
+      musicPlaybackRequest++;
+      musicIsPlaying = false;
+      stopMusicFallback();
+      musicAudio.pause();
+      try { musicAudio.currentTime = 0; } catch (error) { /* 尚未加载元数据时允许直接清空音源。 */ }
+      musicAudio.removeAttribute("src");
+      musicAudio.load();
+      activeMusicTrack = null;
+      musicFallbackPosition = 0;
+      musicFallbackStartedAt = 0;
+      document.querySelectorAll("[data-music-track]").forEach((row) => {
+        row.classList.remove("is-current", "is-playing");
+      });
+      updateMusicPlayback();
+    };
     const toggleMusicPlayback = () => musicIsPlaying ? pauseMusic() : playMusic();
     const startMusicTrack = (trackIndex, openPlayer = true, autoplay = true) => {
       if (!musicTracks.length || !Number.isFinite(Number(trackIndex))) return;
@@ -2595,6 +2616,7 @@
       document.body.dataset.activeApp = "music";
       showMusicPage("player");
     });
+    document.querySelector("#music-mini-close").addEventListener("click", closeMusicPlayer);
     document.querySelector("#music-mini-toggle").addEventListener("click", toggleMusicPlayback);
     document.querySelector("#music-mini-next").addEventListener("click", advanceMusicTrack);
     document.querySelector("#music-play-toggle").addEventListener("click", toggleMusicPlayback);
